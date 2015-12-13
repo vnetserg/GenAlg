@@ -31,6 +31,8 @@ class Ui_MainWindow(object):
         self.addGoodButton.setObjectName("addGoodButton")
         self.gridLayout_2.addWidget(self.addGoodButton, 1, 0, 1, 1)
         self.goodsView = QtWidgets.QTableView(self.groupBox)
+        self.goodsView.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.goodsView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.goodsView.setObjectName("goodsView")
         self.goodsView.verticalHeader().setVisible(False)
         self.gridLayout_2.addWidget(self.goodsView, 0, 0, 1, 3)
@@ -48,9 +50,12 @@ class Ui_MainWindow(object):
         self.delResButton.setObjectName("delResButton")
         self.gridLayout.addWidget(self.delResButton, 1, 1, 1, 1)
         self.resView = QtWidgets.QTableView(self.groupBox_2)
+        self.resView.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.resView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.resView.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.resView.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
         self.resView.setObjectName("resView")
+        self.resView.horizontalHeader().setStretchLastSection(True)
         self.resView.verticalHeader().setVisible(False)
         self.gridLayout.addWidget(self.resView, 0, 0, 1, 2)
         self.verticalLayout_3.addWidget(self.splitter)
@@ -101,8 +106,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "GeneticAlgorithm"))
-        self.groupBox.setTitle(_translate("MainWindow", "Список товаров"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Генетический Алгоритм"))
+        self.groupBox.setTitle(_translate("MainWindow", "Список и стоимость товаров"))
         self.delGoodButton.setText(_translate("MainWindow", "Удалить"))
         self.addGoodButton.setText(_translate("MainWindow", "Добавить"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Доступные ресурсы"))

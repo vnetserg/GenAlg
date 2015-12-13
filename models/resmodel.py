@@ -55,6 +55,8 @@ class ResModel(QtCore.QAbstractTableModel):
     
     def setData(self, index, value, role = QtCore.Qt.EditRole):
         if role == QtCore.Qt.EditRole:
+            value = value.strip()
+            if not value: return False
             if index.column() == 0:
                 try:
                     self.storage.setResName(index.row(), value)

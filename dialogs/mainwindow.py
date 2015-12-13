@@ -45,7 +45,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def addRes(self):
         resname, flag = QtWidgets.QInputDialog.getText(self, "Ввод названия", "Введите название ресурса:")
         if not flag: return
-        resname = good.strip()
+        resname = resname.strip()
         if not resname:
             return QtWidgets.QMessageBox.warning(self, "Ошибка",
                 "Название товара не может быть пустым.")
