@@ -64,9 +64,10 @@ class Ui_MainWindow(object):
         self.groupBox_3.setObjectName("groupBox_3")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.groupBox_3)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lineEdit = QtWidgets.QLineEdit(self.groupBox_3)
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout.addWidget(self.lineEdit)
+        self.solutionEdit = QtWidgets.QLineEdit(self.groupBox_3)
+        self.solutionEdit.setReadOnly(True)
+        self.solutionEdit.setObjectName("solutionEdit")
+        self.horizontalLayout.addWidget(self.solutionEdit)
         self.findSolutionButton = QtWidgets.QPushButton(self.groupBox_3)
         self.findSolutionButton.setObjectName("findSolutionButton")
         self.horizontalLayout.addWidget(self.findSolutionButton)
@@ -101,8 +102,8 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.addGoodButton, self.delGoodButton)
         MainWindow.setTabOrder(self.delGoodButton, self.addResButton)
         MainWindow.setTabOrder(self.addResButton, self.delResButton)
-        MainWindow.setTabOrder(self.delResButton, self.lineEdit)
-        MainWindow.setTabOrder(self.lineEdit, self.findSolutionButton)
+        MainWindow.setTabOrder(self.delResButton, self.solutionEdit)
+        MainWindow.setTabOrder(self.solutionEdit, self.findSolutionButton)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

@@ -17,6 +17,7 @@ class GoodsModel(QtCore.QAbstractTableModel):
         storage.goodDeleted.connect(self.goodDeleted)
         storage.goodRenamed.connect(self.goodRenamed)
         storage.goodCostChanged.connect(self.goodCostChanged)
+        storage.goodPriceChanged.connect(self.goodPriceChanged)
     
     def resAboutToBeAdded(self, resind):
         self.beginInsertColumns(QtCore.QModelIndex(), resind+1, resind+1)
@@ -53,8 +54,12 @@ class GoodsModel(QtCore.QAbstractTableModel):
         self.dataChanged.emit(self.createIndex(gdind, resind+1),
             self.createIndex(gdind, resind+1))
 
+    def goodPriceChanged(self, ind, oldprice, newprice):
+        self.dataChanged.emit(self.createIndex(ind, self.columnCount()-1),
+            self.createIndex(ind, self.columnCount()-1))
+
     def columnCount(self, index = None):
-       return 1 + self.storage.resCount()
+       return 2 + self.storage.resCount()
     
     def rowCount(self, index = QtCore.QModelIndex()):
        return self.storage.goodsCount()
@@ -63,13 +68,17 @@ class GoodsModel(QtCore.QAbstractTableModel):
         if role == QtCore.Qt.DisplayRole:
             if index.column() == 0:
                 return self.storage.goodName(index.row())
+            elif index.column() == self.columnCount()-1:
+                return self.storage.goodPrice(index.row())
             else:
                 return self.storage.goodCost(index.row(), index.column()-1)
     
     def headerData(self, col, orientation, role = QtCore.Qt.DisplayRole):
         if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
             if col == 0:
-                return ""
+                return "Товар"
+            elif col == self.columnCount()-1:
+                return "Стоимость"
             else:
                 return self.storage.resName(col-1)
     
@@ -95,7 +104,10 @@ class GoodsModel(QtCore.QAbstractTableModel):
                     QtWidgets.QMessageBox.warning(self.parent(), "Ошибка",
                         "Количество ресурса должно быть неотрицательным числом.")
                     return False
-                self.storage.setGoodCost(index.row(), index.column()-1, qnt)
+                if index.column() == self.columnCount()-1:
+                    self.storage.setGoodPrice(index.row(), qnt)
+                else:
+                    self.storage.setGoodCost(index.row(), index.column()-1, qnt)
             self.dataChanged.emit(index, index)
             return True
         return False

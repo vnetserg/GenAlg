@@ -134,7 +134,11 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="solutionEdit">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="findSolutionButton">
@@ -201,7 +205,7 @@
   <tabstop>delGoodButton</tabstop>
   <tabstop>addResButton</tabstop>
   <tabstop>delResButton</tabstop>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>solutionEdit</tabstop>
   <tabstop>findSolutionButton</tabstop>
  </tabstops>
  <resources/>

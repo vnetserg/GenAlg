@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import pickle
 from PyQt5.QtCore import QObject, pyqtSignal
 
 class Storage(QObject):
@@ -15,6 +16,7 @@ class Storage(QObject):
     goodDeleted = pyqtSignal(int)
     goodRenamed = pyqtSignal(int, str, str)
     goodCostChanged = pyqtSignal(int, int, int, int)
+    goodPriceChanged = pyqtSignal(int, int, int)
 
     def __init__(self, parent = None):
         super(QObject, self).__init__(parent)
@@ -24,18 +26,31 @@ class Storage(QObject):
         self._goodind = {}
 
     @classmethod
-    def fromDump(cls):
-        pass
+    def fromDump(cls, filename):
+        storage = cls()
+        storage._res, storage._goods = pickle.load(open(filename, "rb"))
+        for ind, res in enumerate(storage._res):
+            storage._resind[res["name"]] = ind
+        for ind, good in enumerate(storage._goods):
+            storage._goodind[good["name"]] = ind
+        return storage
+
+    def goods(self):
+        return list(self._goods)
+
+    def resources(self):
+        return list(self._res)
 
     def dump(self, filename):
-        pass
+        pickle.dump((self._res, self._goods), open(filename, "wb"))
 
     def addGood(self, goodname):
         if goodname in self._goodind:
             raise ValueError("There is already good with such name")
         ind = len(self._goods)
         self.goodAboutToBeAdded.emit(ind)
-        self._goods.append({"name": goodname, "cost": [0]*len(self._res)})
+        self._goods.append({"name": goodname, "cost": [0]*len(self._res),
+                            "price": 0})
         self._goodind[goodname] = ind
         self.goodAdded.emit(ind)
 
@@ -93,6 +108,10 @@ class Storage(QObject):
         resind = self._getResIndex(res)
         return self._goods[gdind]["cost"][resind]
 
+    def goodPrice(self, good):
+        ind = self._getGoodIndex(good)
+        return self._goods[ind]["price"]
+
     def setResName(self, res, newname):
         if newname in self._resind:
             raise ValueError("There is already resource with such name")
@@ -125,6 +144,12 @@ class Storage(QObject):
         oldcost = self._goods[gdind]["cost"][resind]
         self._goods[gdind]["cost"][resind] = newcost
         self.goodCostChanged.emit(gdind, resind, oldcost, newcost)
+
+    def setGoodPrice(self, good, newprice):
+        ind = self._getGoodIndex(good)
+        oldprice = self._goods[ind]["price"]
+        self._goods[ind]["price"] = newprice
+        self.goodPriceChanged.emit(ind, oldprice, newprice)
 
     def _getResIndex(self, res):
         if isinstance(res, str):
