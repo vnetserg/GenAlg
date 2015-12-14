@@ -68,7 +68,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self.storage.delRes(index.row())
 
     def findSolution(self):
+        if self.storage.resCount() == 0 or self.storage.goodsCount() == 0:
+            return QtWidgets.QMessageBox.warning(self, "Ошибка",
+                "Вы должны задать хотя бы один товар и хотя бы один ресурс.")
         goods, res = self.storage.goods(), self.storage.resources()
+        if any(all(cost == 0 for cost in good["cost"]) for good in goods):
+            return QtWidgets.QMessageBox.warning(self, "Ошибка",
+                "У каждого товара должна быть ненулевая ресурсная стоимость.")
         solution = GeneticAlgorithm(goods, res).solve()
         txt = "Прибыль: {}; ".format(solution["profit"])
         txt += ", ".join("'{}' x{}".format(item["name"], item["count"]) for item in solution["items"])

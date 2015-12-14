@@ -118,7 +118,7 @@ class Ui_MainWindow(object):
         self.findSolutionButton.setText(_translate("MainWindow", "Найти"))
         self.menu.setTitle(_translate("MainWindow", "Файл"))
         self.file_open.setText(_translate("MainWindow", "Открыть"))
-        self.file_open.setShortcut(_translate("MainWindow", "Ctrl+O"))
+        self.file_open.setShortcut(_translate("MainWindow", "Ctrl+W"))
         self.file_save.setText(_translate("MainWindow", "Сохранить как"))
         self.file_save.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.file_exit.setText(_translate("MainWindow", "Выход"))

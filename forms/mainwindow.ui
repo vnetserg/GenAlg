@@ -178,7 +178,7 @@
     <string>Открыть</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string>Ctrl+W</string>
    </property>
   </action>
   <action name="file_save">
