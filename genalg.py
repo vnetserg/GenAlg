@@ -3,16 +3,16 @@
 import copy, random
 
 class GeneticAlgorithm:
-    def __init__(self, goods, res):
+    def __init__(self, goods, res, popsize = 100, chosen = 10, mut = 20, brk = 5):
         self.goods = goods
         self.res = res
         self._rescount = [rs["qnt"] for rs in self.res]
         self._goodcost = [good["cost"] for good in self.goods]
         self._goodprice = [good["price"] for good in self.goods]
-        self._popsize = 100
-        self._chosen = 10
-        self._mut = 20
-        self._break = 5
+        self._popsize = popsize
+        self._chosen = chosen
+        self._mut = mut
+        self._break = brk
 
     def solve(self):
         br = 0
